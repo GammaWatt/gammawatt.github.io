@@ -2,9 +2,36 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Road Map</title>
+
+    <style media="screen">
+      .checked-lists li.notcheck:before {
+        content: '\274c';
+        /* content: '&#x274c;'; */
+      }
+
+      .checked-lists li.check:before {
+        content: '\2705';
+      }
+
+      .checked-lists li.check:marker {
+        content: '\2705';
+      }
+
+      .checked-lists ul {
+        list-style: none;
+      }
+    </style>
   </head>
   <body>
-    Hello, World!
+    <h1>
+      Links
+    </h1>
+    <ul>
+      <li>
+        <a href="cv_main.html">main cv</a>
+        <a href="cv_main_pretty.html">main (prettified) cv</a>
+      </li>
+    </ul>
   </body>
 </html>
