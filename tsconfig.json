@@ -1,5 +1,8 @@
 {
   "include": ["./src/**/*"],
+  "files": [
+    "typings.d.ts"
+  ],
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",

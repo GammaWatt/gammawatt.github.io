@@ -9,8 +9,17 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 
+import 'normalize.css';
+import './layout.scss';
+import * as Styles from './layout.module.scss';
+
 import Header from './header';
-import './layout.css';
+import Sidebar from './sidebar'
+
+
+const context = React.createContext({
+  isSidebarVisible: false 
+})
 
 interface LayoutProps {
   children: React.ReactNode
@@ -27,28 +36,67 @@ const Layout = ({ children }: LayoutProps) => {
     }
   `);
 
+  const [sidebarState, setSidebarState] = React.useState(true)
+
+  const toggleSidebar = () => {setSidebarState(!sidebarState)}
+
+  const toggleSidebarIfOff = () => {
+    if (!sidebarState) {
+      setSidebarState(!sidebarState)
+    }
+  }
+
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata?.title || 'Title'} />
-      <div
-        style={{
-          margin: '0 auto',
-          maxWidth: 960,
-          padding: '0 1.0875rem 1.45rem',
-        }}
+    <div className={ Styles.layout } >
+      <Sidebar
+        collapsed={sidebarState}
+        toggleOff={toggleSidebar}
+      />
+      <Header
+        siteTitle={data.site.siteMetadata?.title || 'Title'} 
+        toggleSidebar={toggleSidebar}
+        onClick={toggleSidebarIfOff}
+      />
+      <div 
+        className={ Styles.mainContainer }
+        onClick={toggleSidebarIfOff}
       >
-        <main>{children}</main>
-        <footer
+        <main
           style={{
-            marginTop: '2rem',
+            margin: '0',
+            maxWidth: 960,
+            padding: '3rem 1.45rem 1.0875rem 1.45rem',
+          }}
+        >{children}</main>
+        <footer
+          className={ Styles.footer }
+          style={{
+            paddingTop: '2rem',
+            paddingBottom: '3rem'
           }}
         >
-          © {new Date().getFullYear()}, Built with
-          {' '}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
+          <div
+            style={{
+              margin: '0 auto',
+              maxWidth: 960,
+              padding: '3rem 1.45rem 1.0875rem 1.45rem',
+            }}
+          >
+            { 
+              /*
+                 © {new Date().getFullYear()}, Built with
+                 {' '}
+                 <a href="https://www.gatsbyjs.com">Gatsby</a>
+               */
+            }
+            <p>Links</p>
+            <p>Social media</p>
+            <hr />
+            <p style={{ textAlign: 'center' }}>Sitemap</p>
+          </div>
         </footer>
       </div>
-    </>
+    </div>
   );
 };
 

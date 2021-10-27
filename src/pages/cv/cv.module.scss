@@ -1,0 +1,281 @@
+.document-container {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #FAFAFA;
+  font: 12pt "Tahoma";
+}
+
+.document-container * {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.document-container {
+  --sidebar-darkened: rgba(0, 43, 85, 1);
+  --page-width: 21.6cm;
+  --page-height: 27.9cm;
+}
+
+.document-container {
+  font-family: "Arial";
+  font-size: 11pt;
+}
+
+
+.document-container ul {
+  margin-top: 0.25rem;
+  padding-left: 1rem;
+}
+
+
+.title h1 {
+  text-align: center;
+}
+
+.document {
+}
+
+.contact-me li, .skills-list li {
+  flex: 1;
+}
+
+.contact-me, .skills-list {
+  display: flex;
+}
+
+.page {
+  /* height: var(--page-height); */
+  min-height: var(--page-height);
+  width: var(--page-width);
+  margin: 0 auto 10mm auto;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.page-content {
+  height: 100%;
+  /* padding: 1cm; */
+  /* border: 5px red solid; */
+  /* height: 239mm; */ /* .page height -40mm (20 off top/bottom) */ 
+  /* outline: 2cm #FFEAEA solid; */
+}
+
+
+.p1 {
+  text-align: center;
+}
+
+
+
+.content-container {
+  height: 100%;
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.content-container > div,
+.content-container > main {
+  display: table-cell;
+  height: 100%;
+  text-align: left;
+  vertical-align: top;
+}
+
+.sidebar {
+  background-color: rgba(0, 59, 116, 1);
+  width: 15rem;
+  color: white;
+}
+
+
+.sidebar .profile-pic {
+  background-image: url("https://drive.google.com/uc?export=view&id=156ay8VoYKovYestYlXsWT6FqeEwAwXtN");
+  background-position: center;
+  height: 120px;
+  width: 120px;
+  border-radius: 100%;
+  margin: 0 auto;
+  margin-top: 0.75rem;
+}
+
+.sidebar > div {
+  margin-bottom: 1rem;
+}
+
+
+.sidebar header {
+  margin-bottom: 1rem;
+}
+
+.sidebar header h1 {
+  margin-top: -0.125rem;
+}
+
+.sidebar h1,
+.sidebar h2,
+.sidebar h3 {
+  padding: 0.5rem 0.875rem;
+}
+
+.sidebar h1,
+.sidebar h2 {
+  text-align: left;
+}
+
+.sidebar h1 {
+  margin: 0;
+  margin-top: 0.75rem;
+  /* font-size: 1.5rem; */
+  font-size: 18pt;
+}
+
+.sidebar h2 {
+  margin: 0;
+  font-weight: normal;
+  /* font-size: 1.2rem; */
+  font-size: 14.5pt;
+}
+
+.sidebar h3 {
+  margin: 0;
+  font-size: 10pt;
+}
+
+
+.sidebar h5 {
+  /* font-size: 1rem; */
+  font-size: 10pt;
+  margin: 0.5rem 0;
+}
+
+.sidebar h5 + div {
+  margin-bottom: 1.25rem;
+  font-size: 10pt;
+}
+
+.sidebar div.quality {
+  font-size: 8pt;
+}
+
+.sidebar > div > div {
+  padding: 0rem 0.875rem;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: white;
+}
+
+.sidebar a:link {
+  color: white;
+}
+
+.sidebar a:visited {
+  color: white;
+}
+
+.sidebar h3 {
+  background-color: var(--sidebar-darkened); 
+}
+
+.sidebar .measurebar {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  margin-bottom: 0;
+}
+
+.sidebar .measurebar > div {
+  display: table-cell;
+}
+
+.sidebar .measurebar > div:first-child {
+  background-color: white;
+  border: 0.25rem solid white;
+}
+
+.sidebar .measurebar > div:last-child {
+  background-color: var(--sidebar-darkened);
+  border: 0.25rem solid var(--sidebar-darkened);
+}
+
+.sidebar .quality {
+  text-align: right;
+  /* font-size: 0.875rem; */
+  font-size: 8pt;
+}
+
+
+.content {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.content p {
+  padding-top: .25rem;
+}
+
+.content > section > h3 {
+  --border: 1px solid rgba(0,0,0,0.7);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+
+
+.content .table {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.content .table-cell {
+  display: table-cell;
+}
+
+.content .table-cell:first-child {
+  width: 5rem;
+}
+
+.content .table-cell:last-child {
+  width: 100%;
+}
+
+
+.content h3 {
+  /*
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+   */
+}
+
+
+.content .bold {
+  font-weight: bold;
+}
+
+@media print {
+  .document-container {
+    height: var(--page-height);
+    width: var(--page-width);
+  }
+
+  .title {
+    display: none;
+  }
+
+  .page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+  }
+}
+

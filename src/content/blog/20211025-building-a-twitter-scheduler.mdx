@@ -1,0 +1,34 @@
+---
+title: Building a Twitter Post Scheduler
+date: 2021-10-25
+author: GammaWatt
+slug: 20211025-building-a-twitter-scheduler
+---
+
+Title says it all. This should be a quickie.
+But you will require a valid phone number, either upon creating your account, or offering it up upon applying for a developer account, since that just how things are, now.
+
+The idea, here, is just to get something that'll fulfill the following:
+* Schedule posts to twitter
+* Free / open source
+* No SaaS provider or server required
+
+So, to do that, we'll take some shortcuts.
+
+Download `at`. On Debian-based ditros, it's `sudo apt install -y at`. Use your distro's corresponding package manager.
+
+Next, install tweepy. It's usually a good idea to do this in a virtual environment.
+1. `mkdir ./twitsched && cd ./twitsched`
+2. `python -m venv env`
+3. `source ./env/bin/activate`
+4. `python -m pip install tweepy python-dotenv`
+
+I added `python-dotenv` because we'll need some token keys and such. 
+It's generally bad practice to hardcode them into an app, and really 
+annoying to pass them into environment variables manually all the time.
+
+Log into Twitter, or make an account, go to 
+[https://developer.twitter.com/en/apply-for-access](https://developer.twitter.com/en/apply-for-access)
+and apply for a developer account.
+
+They want statistics or something.... so tell them we're hobbyists making bots and  click whatever confirmation button shows up to continue.
