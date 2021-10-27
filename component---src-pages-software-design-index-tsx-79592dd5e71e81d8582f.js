@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkgammawatt_website=self.webpackChunkgammawatt_website||[]).push([[997],{1195:function(e,t,a){a.r(t);var n=a(7294);t.default=function(){return n.createElement("div",null,"hi")}}}]);
+//# sourceMappingURL=component---src-pages-software-design-index-tsx-79592dd5e71e81d8582f.js.map

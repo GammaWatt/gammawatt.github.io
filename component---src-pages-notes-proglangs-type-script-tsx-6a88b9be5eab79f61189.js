@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkgammawatt_website=self.webpackChunkgammawatt_website||[]).push([[571],{734:function(e,t,a){a.r(t);var n=a(7294);t.default=function(){return n.createElement("div",null,"Foo")}}}]);
+//# sourceMappingURL=component---src-pages-notes-proglangs-type-script-tsx-6a88b9be5eab79f61189.js.map

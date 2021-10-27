@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---src-pages-blog-index-tsx",
+    "path": "/blog/",
+    "result": {"data":{"allMdx":{"edges":[{"node":{"id":"dd8bf6e9-ede3-5fe0-8dc6-d003a558390e","excerpt":"Title says it all. This should be a quickie.\nBut you will require a valid phone number, either upon creating your account, or offering it up upon applying for a developer account, since that just how things are, now. The idea, here, is just to get…","frontmatter":{"date":"October 25, 2021","slug":"20211025-building-a-twitter-scheduler","title":"Building a Twitter Post Scheduler"}}}]}},"pageContext":{}},
+    "staticQueryHashes": ["3649515864"]}

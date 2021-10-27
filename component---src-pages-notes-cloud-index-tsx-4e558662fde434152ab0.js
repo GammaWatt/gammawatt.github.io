@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkgammawatt_website=self.webpackChunkgammawatt_website||[]).push([[960],{9122:function(e,l,t){t.r(l);var n=t(7294);l.default=function(){return n.createElement("div",null,n.createElement("p",null,"Amazon"),n.createElement("p",null,"Google Cloud Platform"),n.createElement("p",null,"Microsoft Azure"),n.createElement("p",null,"Heroku"),n.createElement("p",null,"Oracle Cloud"))}}}]);
+//# sourceMappingURL=component---src-pages-notes-cloud-index-tsx-4e558662fde434152ab0.js.map

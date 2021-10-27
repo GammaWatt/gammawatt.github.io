@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkgammawatt_website=self.webpackChunkgammawatt_website||[]).push([[528],{6211:function(e,t,n){n.r(t);var a=n(7294),l=n(5444);t.default=function(){return a.createElement("div",null,a.createElement("p",null,a.createElement(l.Link,null,"ExpressJs")),a.createElement("p",null,a.createElement(l.Link,{to:"Reactjs"},"Reactjs")))}}}]);
+//# sourceMappingURL=component---src-pages-notes-frameworks-index-tsx-29189c9f0a12b4197456.js.map

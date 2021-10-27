@@ -1,114 +1,163 @@
-const options = {"workboxURL":"https://cdn.jsdelivr.net/npm/workbox-cdn@5.1.4/workbox/workbox-sw.js","importScripts":[],"config":{"debug":false},"cacheOptions":{"cacheId":"GammaWatt-prod","directoryIndex":"/","revision":"66lJMl1yHk4z"},"clientsClaim":true,"skipWaiting":true,"cleanupOutdatedCaches":true,"offlineAnalytics":false,"preCaching":[{"revision":"66lJMl1yHk4z","url":"/?standalone=true"}],"runtimeCaching":[{"urlPattern":"/_nuxt/","handler":"CacheFirst","method":"GET","strategyPlugins":[]},{"urlPattern":"/","handler":"NetworkFirst","method":"GET","strategyPlugins":[]}],"offlinePage":null,"pagesURLPattern":"/","offlineStrategy":"NetworkFirst"}
+/**
+ * Welcome to your Workbox-powered service worker!
+ *
+ * You'll need to register this file in your web app and you should
+ * disable HTTP caching for this file too.
+ * See https://goo.gl/nhQhGp
+ *
+ * The rest of the code is auto-generated. Please don't update this file
+ * directly; instead, make changes to your Workbox build configuration
+ * and re-run your build process.
+ * See https://goo.gl/2aRDsh
+ */
 
-importScripts(...[options.workboxURL, ...options.importScripts])
+importScripts("workbox-v4.3.1/workbox-sw.js");
+workbox.setConfig({modulePathPrefix: "workbox-v4.3.1"});
 
-initWorkbox(workbox, options)
-workboxExtensions(workbox, options)
-precacheAssets(workbox, options)
-cachingExtensions(workbox, options)
-runtimeCaching(workbox, options)
-offlinePage(workbox, options)
-routingExtensions(workbox, options)
+workbox.core.setCacheNameDetails({prefix: "gatsby-plugin-offline"});
 
-function getProp(obj, prop) {
-  return prop.split('.').reduce((p, c) => p[c], obj)
+workbox.core.skipWaiting();
+
+workbox.core.clientsClaim();
+
+/**
+ * The workboxSW.precacheAndRoute() method efficiently caches and responds to
+ * requests for URLs in the manifest.
+ * See https://goo.gl/S9QRab
+ */
+self.__precacheManifest = [
+  {
+    "url": "webpack-runtime-323881e47e96eff61c3a.js"
+  },
+  {
+    "url": "framework-bfcfeaeaeef63a189a97.js"
+  },
+  {
+    "url": "app-fb276fb93515fd1cddb8.js"
+  },
+  {
+    "url": "offline-plugin-app-shell-fallback/index.html",
+    "revision": "793df6a977bc6dd1ba9e05b65f84c3cc"
+  },
+  {
+    "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-7954f08d34efeed8febf.js"
+  },
+  {
+    "url": "polyfill-f823cb8991d5d8b51f2d.js"
+  },
+  {
+    "url": "manifest.webmanifest",
+    "revision": "838ae06804150d6a6b2bb1e1d03f1e0e"
+  }
+].concat(self.__precacheManifest || []);
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
+workbox.routing.registerRoute(/(\.js$|\.css$|static\/)/, new workbox.strategies.CacheFirst(), 'GET');
+workbox.routing.registerRoute(/^https?:.*\/page-data\/.*\.json/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/^https?:\/\/fonts\.googleapis\.com\/css/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
+
+/* global importScripts, workbox, idbKeyval */
+importScripts(`idb-keyval-3.2.0-iife.min.js`)
+
+const { NavigationRoute } = workbox.routing
+
+let lastNavigationRequest = null
+let offlineShellEnabled = true
+
+// prefer standard object syntax to support more browsers
+const MessageAPI = {
+  setPathResources: (event, { path, resources }) => {
+    event.waitUntil(idbKeyval.set(`resources:${path}`, resources))
+  },
+
+  clearPathResources: event => {
+    event.waitUntil(idbKeyval.clear())
+  },
+
+  enableOfflineShell: () => {
+    offlineShellEnabled = true
+  },
+
+  disableOfflineShell: () => {
+    offlineShellEnabled = false
+  },
 }
 
-function initWorkbox(workbox, options) {
-  if (options.config) {
-    // Set workbox config
-    workbox.setConfig(options.config)
+self.addEventListener(`message`, event => {
+  const { gatsbyApi: api } = event.data
+  if (api) MessageAPI[api](event, event.data)
+})
+
+function handleAPIRequest({ event }) {
+  const { pathname } = new URL(event.request.url)
+
+  const params = pathname.match(/:(.+)/)[1]
+  const data = {}
+
+  if (params.includes(`=`)) {
+    params.split(`&`).forEach(param => {
+      const [key, val] = param.split(`=`)
+      data[key] = val
+    })
+  } else {
+    data.api = params
   }
 
-  if (options.cacheNames) {
-    // Set workbox cache names
-    workbox.core.setCacheNameDetails(options.cacheNames)
+  if (MessageAPI[data.api] !== undefined) {
+    MessageAPI[data.api]()
   }
 
-  if (options.clientsClaim) {
-    // Start controlling any existing clients as soon as it activates
-    workbox.core.clientsClaim()
+  if (!data.redirect) {
+    return new Response()
   }
 
-  if (options.skipWaiting) {
-    workbox.core.skipWaiting()
-  }
-
-  if (options.cleanupOutdatedCaches) {
-    workbox.precaching.cleanupOutdatedCaches()
-  }
-
-  if (options.offlineAnalytics) {
-    // Enable offline Google Analytics tracking
-    workbox.googleAnalytics.initialize()
-  }
-}
-
-function precacheAssets(workbox, options) {
-  if (options.preCaching.length) {
-    workbox.precaching.precacheAndRoute(options.preCaching, options.cacheOptions)
-  }
-}
-
-
-function runtimeCaching(workbox, options) {
-  const requestInterceptor = {
-    requestWillFetch({ request }) {
-      if (request.cache === 'only-if-cached' && request.mode === 'no-cors') {
-        return new Request(request.url, { ...request, cache: 'default', mode: 'no-cors' })
-      }
-      return request
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: lastNavigationRequest,
     },
-    fetchDidFail(ctx) {
-      ctx.error.message =
-        '[workbox] Network request for ' + ctx.request.url + ' threw an error: ' + ctx.error.message
-      console.error(ctx.error, 'Details:', ctx)
-    },
-    handlerDidError(ctx) {
-      ctx.error.message =
-        `[workbox] Network handler threw an error: ` + ctx.error.message
-      console.error(ctx.error, 'Details:', ctx)
-      return null
+  })
+}
+
+const navigationRoute = new NavigationRoute(async ({ event }) => {
+  // handle API requests separately to normal navigation requests, so do this
+  // check first
+  if (event.request.url.match(/\/.gatsby-plugin-offline:.+/)) {
+    return handleAPIRequest({ event })
+  }
+
+  if (!offlineShellEnabled) {
+    return await fetch(event.request)
+  }
+
+  lastNavigationRequest = event.request.url
+
+  let { pathname } = new URL(event.request.url)
+  pathname = pathname.replace(new RegExp(`^`), ``)
+
+  // Check for resources + the app bundle
+  // The latter may not exist if the SW is updating to a new version
+  const resources = await idbKeyval.get(`resources:${pathname}`)
+  if (!resources || !(await caches.match(`/app-fb276fb93515fd1cddb8.js`))) {
+    return await fetch(event.request)
+  }
+
+  for (const resource of resources) {
+    // As soon as we detect a failed resource, fetch the entire page from
+    // network - that way we won't risk being in an inconsistent state with
+    // some parts of the page failing.
+    if (!(await caches.match(resource))) {
+      return await fetch(event.request)
     }
   }
 
-  for (const entry of options.runtimeCaching) {
-    const urlPattern = new RegExp(entry.urlPattern)
-    const method = entry.method || 'GET'
+  const offlineShell = `/offline-plugin-app-shell-fallback/index.html`
+  const offlineShellWithKey = workbox.precaching.getCacheKeyForURL(offlineShell)
+  return await caches.match(offlineShellWithKey)
+})
 
-    const plugins = (entry.strategyPlugins || [])
-      .map(p => new (getProp(workbox, p.use))(...p.config))
+workbox.routing.registerRoute(navigationRoute)
 
-    plugins.unshift(requestInterceptor)
-
-    const strategyOptions = { ...entry.strategyOptions, plugins }
-
-    const strategy = new workbox.strategies[entry.handler](strategyOptions)
-
-    workbox.routing.registerRoute(urlPattern, strategy, method)
-  }
-}
-
-function offlinePage(workbox, options) {
-  if (options.offlinePage) {
-    // Register router handler for offlinePage
-    workbox.routing.registerRoute(new RegExp(options.pagesURLPattern), ({ request, event }) => {
-      const strategy = new workbox.strategies[options.offlineStrategy]
-      return strategy
-        .handle({ request, event })
-        .catch(() => caches.match(options.offlinePage))
-    })
-  }
-}
-
-function workboxExtensions(workbox, options) {
-  
-}
-
-function cachingExtensions(workbox, options) {
-  
-}
-
-function routingExtensions(workbox, options) {
-  
-}
+// this route is used when performing a non-navigation request (e.g. fetch)
+workbox.routing.registerRoute(/\/.gatsby-plugin-offline:.+/, handleAPIRequest)
