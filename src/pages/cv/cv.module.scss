@@ -46,8 +46,9 @@
 }
 
 .page {
-  /* height: var(--page-height); */
+  height: var(--page-height);
   min-height: var(--page-height);
+  max-height: var(--page-height);
   width: var(--page-width);
   margin: 0 auto 10mm auto;
   background: white;
